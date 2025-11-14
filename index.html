@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moto Scroll</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        img {
+            width: 100vw;
+            height: 100dvh;
+            object-fit: cover;
+            position: fixed;
+        }
+
+        main {
+            height: 300dvh;
+        }
+
+        header {
+            background: linear-gradient(40deg, #ba3816, #a41705 40%);
+            width: 300px;
+            height: 300px;
+            border-radius: 1000px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            margin-top: -230px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            animation-name: slideInDown;
+            animation-duration: 1s;
+            animation-timing-function: ease-out;
+
+            img {
+                width: 130px;
+                margin: 0 auto;
+                height: auto;
+                margin-bottom: 30px;
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                transform: translate3d(-50%, -100%, 0);
+                opacity: 0;
+            }
+            
+            to {
+                transform: translate3d(-50%, 0, 0);
+                opacity: 1;
+            }
+        }
+    </style>
+
+    <script type="module">
+        const MAX_FRAMES = 151
+        const img = document.querySelector('.moto')
+
+        let maxScroll = document.documentElement.scrollHeight - window.innerHeight
+
+        window.addEventListener('resize', () => {
+            maxScroll = document.documentElement.scrollHeight = window.innerHeight
+        })
+
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY
+            const scrollFraction = scrollPosition / maxScroll
+            const frame = Math.floor(scrollFraction * MAX_FRAMES) || 1
+            const id = frame.toString().padStart(3, '0')
+            img.src = `frames/moto-${id}.webp`      
+        })
+    </script>
+</head>
+<body>
+    <main>
+        <header>
+            <img src="logo.png" alt="Ichiban">
+        </header>
+        <img class="moto" src="frames/0.webp" alt="Moto Chula">
+    </main>
+</body>
+</html>
